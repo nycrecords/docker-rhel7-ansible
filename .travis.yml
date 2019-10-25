@@ -1,5 +1,4 @@
 services: docker
 script:
-- echo "$QUAY_PASSWORD" | docker login --username $QUAY_USERNAME --password-stdin
-  quay.io
+- echo "$QUAY_PASSWORD" | docker login --username $QUAY_USERNAME --password-stdin quay.io
 - "./buildpush.sh"
