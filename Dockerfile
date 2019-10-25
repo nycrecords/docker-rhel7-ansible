@@ -1,7 +1,6 @@
 FROM registry.access.redhat.com/rhel7
 ARG RHSM_USERNAME
 ARG RHSM_PASSWORD
-ARG RHSM_POOL_ID
 
 ENV container=docker
 
@@ -15,10 +14,9 @@ RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == system
     rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 RUN subscription-manager register --username=$RHSM_USERNAME --password=$RHSM_PASSWORD \
-    && subscription-manager attach --pool=$RHSM_POOL_ID \
+    && subscription-manager attach \
     && subscription-manager repos \
         --enable rhel-7-server-ansible-2.8-rpms \
-        --disable rhel-7-server-htb-rpms \
     && yum -y update \
     && yum -y install \
         ansible \
